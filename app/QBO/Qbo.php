@@ -14,7 +14,7 @@ use QuickBooksOnline\API\DataService\DataService;
 use QuickBooksOnline\API\Facades\Invoice;
 
 define('ClientId', 'AB8Gad3SScVwSKkgnxY886k8UbI1yaEeCXOHE0VPmLkr8POjiv');
-define('ClientSecret', 'qbZ7BUIJNCV8snM54TqW4OyXShnf9BdTl9i6bFUZ');
+define('ClientSecret', '5c0VV68IR4r24F9ITSAwNccgOiUV6HWdmQwHWsFH');
 define('RedirectURI', 'http://qbo2.loc/callback');
 
 class qbo {
@@ -128,15 +128,15 @@ class qbo {
                     "DetailType" => "SalesItemLineDetail",
                     "SalesItemLineDetail" => [
                         "ItemRef" => [
-                            "value" => 1,
-                            "name" => "Services"
+                            "value" => 21,
+                            "name" => "Test Product"
                         ]
                     ]
                 ]
             ],
             "CustomerRef" => [
-                "value" => "1",
-                "name" => "Alex" . rand(1,5)
+                "value" => 61,
+                'name' => "Alena Test"
             ]
         ]);
 

@@ -28,7 +28,7 @@ class Page extends Controller
         $amount = null;
         $employee = null;
         $accessToken = null;
-        if(!empty(session('sessionAccessToken'))) {
+        if($request->session()->has('sessionAccessToken')) {
             //Customer authorized and I'm taking Token data from session
             $accessToken = unserialize(session('sessionAccessToken'));
 
@@ -48,10 +48,19 @@ class Page extends Controller
         return view('welcome', Array('qbo' => $this->qbo, 'amount' => $amount, 'employee' => $employee, 'accessToken' => $accessToken));
     }
 
-    public function newInvoice() {
-        //Creating new invoice
-        $amount = $this->qbo->createInvoice();
-        return redirect('/?invoiceAmount='.$amount);
+    public function newInvoice(Request $request) {
+        if($request->session()->has('sessionAccessToken')) {
+            //Customer authorized and I'm taking Token data from session
+            $accessToken = unserialize(session('sessionAccessToken'));
+
+            //Setting current access token data to QBO SDK
+            $this->qbo->setTokenObject($accessToken);
+            $this->qbo->updateOAuth2Token();
+            //Creating new invoice
+            $amount = $this->qbo->createInvoice();
+            return redirect('/?invoiceAmount='.$amount);
+        } else echo "error";
+
     }
 
     public function callback(Request $request) {
@@ -77,7 +86,7 @@ class Page extends Controller
             $token = $this->qbo->getTokenObject();
 
             //Saving Token Data to session
-            session('sessionAccessToken', serialize($token));
+            $request->session()->put('sessionAccessToken', serialize($token));
         }
 
         return redirect('/');
